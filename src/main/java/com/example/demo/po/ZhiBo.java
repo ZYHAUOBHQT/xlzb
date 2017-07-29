@@ -22,7 +22,7 @@ public class ZhiBo {
     @Version
     private int version; //版本号
 
-    private String pdId; //频道ID
+    private int pdId; //频道ID
 
     private String pic; //封面
 
