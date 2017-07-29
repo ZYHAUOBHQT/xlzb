@@ -22,11 +22,7 @@ public class Concern {
     @Version
     private int version; //版本号
 
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = User.class)
-    @JoinColumn(name = "user_id")
-    private User user; //用户
+    private int userId; //用户ID
 
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = User.class)
-    @JoinColumn(name = "zhiBo_id")
-    private ZhiBo zhiBo; //直播
+    private int pdId; //频道ID
 }

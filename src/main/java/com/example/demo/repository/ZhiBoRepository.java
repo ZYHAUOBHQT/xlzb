@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ZhiBoRepository extends JpaRepository<ZhiBo, Long> {
-    ZhiBo getByPdId(int pdId);
+    ZhiBo findByPdId(int pdId);
 }

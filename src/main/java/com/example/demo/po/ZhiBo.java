@@ -28,13 +28,11 @@ public class ZhiBo {
 
     private String title; //频道名
 
-    private String status; //状态
+    private int status; //状态
 
     private int gzNum; //关注人数
 
     private int zxNum; //在线人数
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = User.class)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private int userId; //用户ID
 }

@@ -36,7 +36,20 @@ public class ZhiBoController {
      * @return
      */
     @PostMapping(value = ApiConf.createOrUpdate, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> createOrUpdate(@RequestParam String title, @RequestParam int pdId, HttpSession session) {
-        return zhiBoService.createOrUpdate(title, pdId);
+    public ResponseEntity<?> createOrUpdate(@RequestParam int userId, @RequestParam String title, @RequestParam int pdId, HttpSession session) {
+        return zhiBoService.createOrUpdate(userId, title, pdId);
+    }
+
+    /**
+     * 进入直播间
+     *
+     * @param userId
+     * @param pdId
+     * @param session
+     * @return
+     */
+    @PostMapping(value = ApiConf.inZhiBo, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> inZhiBo(@RequestParam int userId, @RequestParam int pdId, HttpSession session) {
+        return zhiBoService.inZhiBo(userId, pdId);
     }
 }

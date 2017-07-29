@@ -28,5 +28,7 @@ public class User {
     @Column(nullable = false, length = 32)
     private String password; //密码
 
+    private int userId;
+
     private String headPic; //头像
 }
