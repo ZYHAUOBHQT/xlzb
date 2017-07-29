@@ -22,9 +22,17 @@ public class ZhiBo {
     @Version
     private int version; //版本号
 
+    private String pdId; //频道ID
+
     private String pic; //封面
 
-    private String title; //标题
+    private String title; //频道名
+
+    private String status; //状态
+
+    private int gzNum; //关注人数
+
+    private int zxNum; //在线人数
 
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = User.class)
     @JoinColumn(name = "user_id")

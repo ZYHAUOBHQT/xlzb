@@ -28,11 +28,5 @@ public class User {
     @Column(nullable = false, length = 32)
     private String password; //密码
 
-    private String status; //标记
-
     private String headPic; //头像
-
-    private String phone; //手机号
-
-    private String realName; //真实姓名
 }
