@@ -9,4 +9,6 @@ public interface ZhiBoService {
     ResponseEntity<?> createOrUpdate(int userId, String title, int pdId); //创建/更新频道
 
     ResponseEntity<?> inZhiBo(int userId, int pdId); //进入直播间
+
+    ResponseEntity<?> homePage(); //主页请求
 }

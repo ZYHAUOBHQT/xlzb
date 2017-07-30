@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,5 +52,16 @@ public class ZhiBoController {
     @PostMapping(value = ApiConf.inZhiBo, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> inZhiBo(@RequestParam int userId, @RequestParam int pdId, HttpSession session) {
         return zhiBoService.inZhiBo(userId, pdId);
+    }
+
+    /**
+     * 主页请求
+     *
+     * @param session
+     * @return
+     */
+    @GetMapping(value = ApiConf.homePage, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> homePage(HttpSession session) {
+        return zhiBoService.homePage();
     }
 }

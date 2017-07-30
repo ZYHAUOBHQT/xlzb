@@ -6,11 +6,16 @@ import com.example.demo.po.config.Api;
 import com.example.demo.repository.ConcernRepository;
 import com.example.demo.repository.ZhiBoRepository;
 import com.example.demo.service.inner.ZhiBoService;
+import com.example.demo.util.HomePageResponseObj;
 import com.example.demo.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by zhubuqing on 2017/7/26.
@@ -82,6 +87,28 @@ public class ZhiBoServiceImpl implements ZhiBoService {
         else
             result.setMsg("0");
         result.setData(z);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * 主页请求
+     *
+     * @return
+     */
+    @Override
+    public ResponseEntity<?> homePage() {
+        int status = 1;
+        PageRequest pageRequest = new PageRequest(0, 3);
+        List<ZhiBo> banner = zhiBoRepository.findByStatus(pageRequest, status);
+        Sort zxNum = new Sort(Sort.Direction.DESC, "zxNum");
+        List<ZhiBo> reBo = zhiBoRepository.findByStatus(pageRequest, zxNum);
+        Sort gzNum = new Sort(Sort.Direction.DESC, "gzNum");
+        PageRequest reMenPageRequest = new PageRequest(0, 20);
+        List<ZhiBo> reMen = zhiBoRepository.findByStatus(reMenPageRequest, gzNum);
+        HomePageResponseObj homePageResponseObj = new HomePageResponseObj(banner, reBo, reMen);
+        Result<HomePageResponseObj> result = new Result<>();
+        result.api(Api.SUCCESS);
+        result.setData(homePageResponseObj);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
