@@ -10,4 +10,5 @@ public interface ApiConf {
     String changeGzNum = "liveRadio/concern/changeGzNum"; //修改关注人数
     String homePage = "liveRadio/zhiBo/homePage"; //主页请求
     String login = "liveRadio/user/login"; //登录
+    String getUserConsern = "liveRadio/concern/getUserConsern"; //获取某个人关注的频道
 }

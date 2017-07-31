@@ -24,5 +24,7 @@ public class Concern {
 
     private int userId; //用户ID
 
-    private int pdId; //频道ID
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = ZhiBo.class)
+    @JoinColumn(name = "zhiBo_id")
+    private ZhiBo zhiBo; //频道
 }

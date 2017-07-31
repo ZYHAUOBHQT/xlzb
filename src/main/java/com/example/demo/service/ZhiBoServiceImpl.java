@@ -76,7 +76,7 @@ public class ZhiBoServiceImpl implements ZhiBoService {
      */
     @Override
     public ResponseEntity<?> inZhiBo(int userId, int pdId) {
-        concern = concernRepository.findUserIdAndPdId(userId, pdId);
+        concern = concernRepository.findByUserIdAndPdId(userId, pdId);
         zhiBo = zhiBoRepository.findByPdId(pdId);
         zhiBo.setZxNum(zhiBo.getZxNum() + 1);
         ZhiBo z = zhiBoRepository.saveAndFlush(zhiBo);
@@ -98,13 +98,17 @@ public class ZhiBoServiceImpl implements ZhiBoService {
     @Override
     public ResponseEntity<?> homePage() {
         int status = 1;
-        PageRequest pageRequest = new PageRequest(0, 3);
-        List<ZhiBo> banner = zhiBoRepository.findByStatus(pageRequest, status);
         Sort zxNum = new Sort(Sort.Direction.DESC, "zxNum");
-        List<ZhiBo> reBo = zhiBoRepository.findByStatus(pageRequest, zxNum);
+        PageRequest bannerBageRequest = new PageRequest(0, 3, zxNum);
+        List<ZhiBo> banner = zhiBoRepository.findByStatus(bannerBageRequest, status);
+
+        PageRequest reBoBageRequest = new PageRequest(0, 3, zxNum);
+        List<ZhiBo> reBo = zhiBoRepository.findAll(reBoBageRequest).getContent();
+
         Sort gzNum = new Sort(Sort.Direction.DESC, "gzNum");
-        PageRequest reMenPageRequest = new PageRequest(0, 20);
-        List<ZhiBo> reMen = zhiBoRepository.findByStatus(reMenPageRequest, gzNum);
+        PageRequest reMenPageRequest = new PageRequest(0, 20, gzNum);
+        List<ZhiBo> reMen = zhiBoRepository.findAll(reMenPageRequest).getContent();
+
         HomePageResponseObj homePageResponseObj = new HomePageResponseObj(banner, reBo, reMen);
         Result<HomePageResponseObj> result = new Result<>();
         result.api(Api.SUCCESS);

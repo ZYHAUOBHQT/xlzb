@@ -27,8 +27,21 @@ public class ConcernController {
         this.concernService = concernService;
     }
 
+    /**
+     * 修改关注人数
+     *
+     * @param userId
+     * @param pdId
+     * @param session
+     * @return
+     */
     @PostMapping(value = ApiConf.changeGzNum, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> changeGzNum(@RequestParam int userId, @RequestParam int pdId, HttpSession session) {
         return concernService.changeGzNum(userId, pdId);
+    }
+
+    @PostMapping(value = ApiConf.getUserConsern, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> getZhiBoConsern(@RequestParam int userId, HttpSession session) {
+        return concernService.getUserConsern(userId);
     }
 }

@@ -60,7 +60,7 @@ public class ZhiBoController {
      * @param session
      * @return
      */
-    @GetMapping(value = ApiConf.homePage, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = ApiConf.homePage, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> homePage(HttpSession session) {
         return zhiBoService.homePage();
     }

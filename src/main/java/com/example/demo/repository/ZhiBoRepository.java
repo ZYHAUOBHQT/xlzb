@@ -17,6 +17,4 @@ public interface ZhiBoRepository extends JpaRepository<ZhiBo, Long> {
     ZhiBo findByPdId(int pdId);
 
     List<ZhiBo> findByStatus(Pageable pageable, int status);
-
-    List<ZhiBo> findByStatus(Pageable pageable, Sort sort);
 }
