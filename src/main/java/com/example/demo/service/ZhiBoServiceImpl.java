@@ -77,17 +77,22 @@ public class ZhiBoServiceImpl implements ZhiBoService {
      */
     @Override
     public ResponseEntity<?> inZhiBo(int userId, int pdId) {
-        zhiBo = zhiBoRepository.findByPdId(pdId);
-        concern = concernRepository.findByUserIdAndZhiBo(userId, zhiBo);
-        zhiBo.setZxNum(zhiBo.getZxNum() + 1);
-        ZhiBo z = zhiBoRepository.saveAndFlush(zhiBo);
         Result<ZhiBo> result = new Result<>();
         result.api(Api.SUCCESS);
-        if (concern == null)
-            result.setMsg("0");
-        else
-            result.setMsg("1");
-        result.setData(z);
+        zhiBo = zhiBoRepository.findByPdId(pdId);
+        if (zhiBo.getUserId() == userId) {
+            result.setMsg("2");
+        } else {
+            concern = concernRepository.findByUserIdAndZhiBo(userId, zhiBo);
+            zhiBo.setZxNum(zhiBo.getZxNum() + 1);
+            ZhiBo z = zhiBoRepository.saveAndFlush(zhiBo);
+
+            if (concern == null)
+                result.setMsg("0");
+            else
+                result.setMsg("1");
+            result.setData(z);
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
