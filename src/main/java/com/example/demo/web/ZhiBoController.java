@@ -64,4 +64,26 @@ public class ZhiBoController {
     public ResponseEntity<?> homePage(HttpSession session) {
         return zhiBoService.homePage();
     }
+
+    /**
+     * 推荐
+     *
+     * @param session
+     * @return
+     */
+    @PostMapping(value = ApiConf.recommend, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> recommend(HttpSession session) {
+        return zhiBoService.recommend();
+    }
+
+    /**
+     * 退出直播间
+     *
+     * @param pdId
+     * @return
+     */
+    @PostMapping(value = ApiConf.outZhiBo, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> outZhiBo(@RequestParam int pdId) {
+        return zhiBoService.outZhiBo(pdId);
+    }
 }

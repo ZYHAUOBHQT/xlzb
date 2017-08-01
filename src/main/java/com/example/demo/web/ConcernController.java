@@ -40,7 +40,14 @@ public class ConcernController {
         return concernService.changeGzNum(userId, pdId);
     }
 
-    @PostMapping(value = ApiConf.getUserConsern, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    /**
+     * 获取某个人关注的频道
+     *
+     * @param userId
+     * @param session
+     * @return
+     */
+    @PostMapping(value = ApiConf.getUserConcern, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getZhiBoConsern(@RequestParam int userId, HttpSession session) {
         return concernService.getUserConsern(userId);
     }

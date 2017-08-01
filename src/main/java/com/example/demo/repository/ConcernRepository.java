@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.po.Concern;
+import com.example.demo.po.ZhiBo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface ConcernRepository extends JpaRepository<Concern, Long> {
-    Concern findByUserIdAndPdId(int userId, int pdId);
+    Concern findByUserIdAndZhiBo(int userId, ZhiBo zhiBo);
 
     List<Concern> findByUserId(int userId);
 }

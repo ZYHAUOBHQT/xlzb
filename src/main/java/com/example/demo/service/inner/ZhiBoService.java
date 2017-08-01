@@ -11,4 +11,8 @@ public interface ZhiBoService {
     ResponseEntity<?> inZhiBo(int userId, int pdId); //进入直播间
 
     ResponseEntity<?> homePage(); //主页请求
+
+    ResponseEntity<?> recommend(); //推荐
+
+    ResponseEntity<?> outZhiBo(int pdId); //退出直播间
 }

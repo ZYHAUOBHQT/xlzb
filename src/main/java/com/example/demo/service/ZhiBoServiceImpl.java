@@ -7,6 +7,7 @@ import com.example.demo.repository.ConcernRepository;
 import com.example.demo.repository.ZhiBoRepository;
 import com.example.demo.service.inner.ZhiBoService;
 import com.example.demo.util.HomePageResponseObj;
+import com.example.demo.util.Recommend;
 import com.example.demo.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -76,16 +77,16 @@ public class ZhiBoServiceImpl implements ZhiBoService {
      */
     @Override
     public ResponseEntity<?> inZhiBo(int userId, int pdId) {
-        concern = concernRepository.findByUserIdAndPdId(userId, pdId);
         zhiBo = zhiBoRepository.findByPdId(pdId);
+        concern = concernRepository.findByUserIdAndZhiBo(userId, zhiBo);
         zhiBo.setZxNum(zhiBo.getZxNum() + 1);
         ZhiBo z = zhiBoRepository.saveAndFlush(zhiBo);
         Result<ZhiBo> result = new Result<>();
         result.api(Api.SUCCESS);
         if (concern == null)
-            result.setMsg("1");
-        else
             result.setMsg("0");
+        else
+            result.setMsg("1");
         result.setData(z);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -99,11 +100,11 @@ public class ZhiBoServiceImpl implements ZhiBoService {
     public ResponseEntity<?> homePage() {
         int status = 1;
         Sort zxNum = new Sort(Sort.Direction.DESC, "zxNum");
-        PageRequest bannerBageRequest = new PageRequest(0, 3, zxNum);
-        List<ZhiBo> banner = zhiBoRepository.findByStatus(bannerBageRequest, status);
+        PageRequest bannerPageRequest = new PageRequest(0, 3, zxNum);
+        List<ZhiBo> banner = zhiBoRepository.findByStatus(bannerPageRequest, status);
 
-        PageRequest reBoBageRequest = new PageRequest(0, 3, zxNum);
-        List<ZhiBo> reBo = zhiBoRepository.findAll(reBoBageRequest).getContent();
+        PageRequest reBoPageRequest = new PageRequest(0, 3, zxNum);
+        List<ZhiBo> reBo = zhiBoRepository.findAll(reBoPageRequest).getContent();
 
         Sort gzNum = new Sort(Sort.Direction.DESC, "gzNum");
         PageRequest reMenPageRequest = new PageRequest(0, 20, gzNum);
@@ -113,6 +114,46 @@ public class ZhiBoServiceImpl implements ZhiBoService {
         Result<HomePageResponseObj> result = new Result<>();
         result.api(Api.SUCCESS);
         result.setData(homePageResponseObj);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * 推荐
+     *
+     * @return
+     */
+    @Override
+    public ResponseEntity<?> recommend() {
+        Sort zxNum = new Sort(Sort.Direction.DESC, "zxNum");
+        PageRequest dayPageRequest = new PageRequest(0, 4, zxNum);
+        List<ZhiBo> dayRecommends = zhiBoRepository.findAll(dayPageRequest).getContent();
+
+        Sort gzNum = new Sort(Sort.Direction.DESC, "gzNum");
+        PageRequest weekPageRequest = new PageRequest(0, 4, gzNum);
+        List<ZhiBo> weekRecommends = zhiBoRepository.findAll(weekPageRequest).getContent();
+
+        Recommend recommend = new Recommend(dayRecommends, weekRecommends);
+
+        Result<Recommend> result = new Result<>();
+        result.api(Api.SUCCESS);
+        result.setData(recommend);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * 退出直播间
+     *
+     * @param pdId
+     * @return
+     */
+    @Override
+    public ResponseEntity<?> outZhiBo(int pdId) {
+        zhiBo = zhiBoRepository.findByPdId(pdId);
+        zhiBo.setZxNum(zhiBo.getZxNum() - 1);
+        ZhiBo z = zhiBoRepository.saveAndFlush(zhiBo);
+        Result<ZhiBo> result = new Result<>();
+        result.api(Api.SUCCESS);
+        result.setData(z);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

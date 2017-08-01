@@ -43,14 +43,20 @@ public class ConcernServiceImpl implements ConcernService {
      */
     @Override
     public ResponseEntity<?> changeGzNum(int userId, int pdId) {
-        concern = new Concern();
         zhiBo = zhiBoRepository.findByPdId(pdId);
-        concern.setZhiBo(zhiBo);
-        concern.setUserId(userId);
-        concernRepository.saveAndFlush(concern);
+        concern = concernRepository.findByUserIdAndZhiBo(userId, zhiBo);
         Result<String> result = new Result<>();
         result.api(Api.SUCCESS);
-        result.setData("SUCCESS");
+        if (concern == null) {
+            concern = new Concern();
+            concern.setUserId(userId);
+            concern.setZhiBo(zhiBo);
+            concernRepository.saveAndFlush(concern);
+            result.setData("CONCERN");
+        } else {
+            concernRepository.delete(concern);
+            result.setData("CANCEL");
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
